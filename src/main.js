@@ -14,7 +14,7 @@ const config = {
   roundPixels: true,
   scale: { mode: Phaser.Scale.RESIZE, autoCenter: Phaser.Scale.CENTER_BOTH,
            width: 960, height: 540 },
-  physics: { default: 'arcade', arcade: { gravity: { y: 750 }, debug: false } },
+  physics: { default: 'arcade', arcade: { gravity: { y: 850 }, debug: false } },
   scene: [MenuScene, GardenScene, EndingScene]
 };
 new Phaser.Game(config);

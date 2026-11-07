@@ -5,7 +5,6 @@ export class MenuScene extends Phaser.Scene {
     this.load.image('sakura','/assets/backgrounds/sakura-garden.png');
     this.load.image('deadForest','/assets/backgrounds/dead-forest.png');
     this.load.image('blueCharacter','/assets/sprites/blue-character.png');
-    this.load.image('hug','/assets/sprites/abraço.png.png');
     this.load.spritesheet('girl','/assets/sprites/girl-walk.png',{frameWidth:108,frameHeight:112});
     this.load.spritesheet('girlIdle','/assets/sprites/girl-idle.png',{frameWidth:106,frameHeight:112});
     this.load.audio('phase1','/assets/music/phase-1.mp3');

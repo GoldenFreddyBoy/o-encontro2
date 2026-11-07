@@ -30,6 +30,9 @@ export class GardenScene extends Phaser.Scene {
       .setOrigin(0).setTileScale(0.575).setDepth(-10).setAlpha(0);
 
     this.add.rectangle(this.worldWidth / 2, 516, this.worldWidth, 48, 0x302633, 0.82).setDepth(-2);
+    const ground = this.add.rectangle(this.worldWidth / 2, 530, this.worldWidth, 30, 0x342b36);
+    this.physics.add.existing(ground, true);
+
     this.platforms = this.physics.add.staticGroup();
     const addPlatform = (x, y, w = 150) => {
       const p = this.add.rectangle(x, y, w, 18, 0x655465).setAlpha(0.92);
@@ -37,9 +40,6 @@ export class GardenScene extends Phaser.Scene {
       this.platforms.add(p);
       this.add.rectangle(x, y - 10, w, 4, 0xb39aaa).setAlpha(0.65);
     };
-
-    // Plataforma segura de início: mantenha esta plataforma para a personagem não cair ao nascer.
-    addPlatform(170, 490, 260);
 
     // Fase 1 — percurso longo, com pequenas subidas e caminhos alternativos.
     [
@@ -58,18 +58,16 @@ export class GardenScene extends Phaser.Scene {
     ].forEach(p => addPlatform(...p));
 
     this.player = this.physics.add.sprite(90, 390, 'girl');
-    // Ponto de retorno caso a personagem caia fora das plataformas.
-    this.startX = this.player.x;
-    this.startY = this.player.y;
     this.player.setScale(1.05).setDepth(5).setCollideWorldBounds(true);
     this.player.body.setSize(34, 75).setOffset(20, 20);
+    this.physics.add.collider(this.player, ground);
     this.physics.add.collider(this.player, this.platforms);
 
     this.cursors = this.input.keyboard.createCursorKeys();
     this.keys = this.input.keyboard.addKeys('A,D,W,SPACE');
     this.createTouchControls();
 
-    this.title = this.add.text(26, 22, 'O ENCONTRO — A FLORESTA ESQUECIDA', {
+    this.title = this.add.text(26, 22, 'A FLORESTA ESQUECIDA', {
       fontSize: '20px', color: '#fff0f7', stroke: '#302332', strokeThickness: 4
     }).setScrollFactor(0).setDepth(30);
     this.subtitle = this.add.text(26, 50, 'Explore com calma. Há pequenos bilhetes pelo caminho.', {
@@ -192,15 +190,7 @@ export class GardenScene extends Phaser.Scene {
     if (left) { this.player.setVelocityX(-speed); this.player.setFlipX(true); }
     else if (right) { this.player.setVelocityX(speed); this.player.setFlipX(false); }
     else this.player.setVelocityX(0);
-    if (jump && this.player.body.blocked.down) this.player.setVelocityY(-520);
-
-    // Se cair, retorna ao ponto inicial. O início fica protegido pela plataforma acima.
-    if (this.player.y > 650) {
-      this.player.setPosition(this.startX, this.startY);
-      this.player.setVelocity(0, 0);
-      this.player.setAlpha(0.35);
-      this.tweens.add({ targets: this.player, alpha: 1, duration: 350 });
-    }
+    if (jump && this.player.body.blocked.down) this.player.setVelocityY(-500);
     if (this.player.body.velocity.x !== 0 && this.player.body.blocked.down) this.player.anims.play('walk', true);
     else this.player.anims.play('idle', true);
 

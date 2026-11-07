@@ -1,5 +1,5 @@
 {
-  "name": "o-encontro",
+  "name": "a-jornada-do-coracao",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -12,8 +12,5 @@
   },
   "devDependencies": {
     "vite": "^6.0.0"
-  },
-  "allowScripts": {
-    "esbuild@0.25.12": true
   }
 }
